@@ -1,0 +1,59 @@
+{
+	
+	"case_converter_extension_name": {
+		"message": "Case Converter",
+		"description": "Name of this extension"
+	},
+	"case_converter_extension_desc": {
+		"message": "Easily convert the selected text in upper case, lower case, ect.",
+		"description": "The description of this extension"
+	},
+	"ccm_upper_case": {
+		"message": "Upper case",
+		"description": "Context menu option for upper case"
+	},
+	"ccm_lower_case": {
+		"message": "Lower case",
+		"description": "Context menu option for lower case"
+	},
+	"ccm_camel_case": {
+		"message": "camelCase",
+		"description": "Context menu option for camelCase"
+	},
+	"ccm_pascal_case": {
+		"message": "PascalCase",
+		"description":  "Context menu option for PascalCase"
+	},
+	"ccm_capital_case": {
+		"message": "Capitalize",
+		"description": "Context menu option for capitalization"
+	},
+	"ccm_email": {
+		"message": "E-mail",
+		"description": "Context menu option to convert into email format"
+	},
+	"ccm_wo_accent": {
+		"message": "Remove accents",
+		"description": "Context menu option to replace accented characters by their unaccented equivalent"
+	},
+	"ccm_sentence_case": {
+		"message": "Sentence",
+		"description": "Option from the context menu to uppercase according sentences"
+	},
+	"msg_not_editable_element": {
+		"message": "Text not editable",
+		"description": "Information message about non-editable text conversion"
+	},
+	"ccm_informations": {
+		"message": "Informations",
+		"description": "Context menu option to display information about selected text"
+	},
+	"lbl_words": 		{ "message": "Words" },
+	"lbl_characters": 	{ "message": "Characters" },
+	"lbl_lines": 		{ "message": "Lines"},
+
+	"options_saved": {
+		"message": "Options saved",
+		"description": "Saving options message"
+	}
+}

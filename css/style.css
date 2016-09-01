@@ -1,0 +1,21 @@
+.cc_escalade_button {
+	margin: 5px 0;
+}
+
+.cc_escalade_button a {
+	margin: 0 5px 5px 0;
+}
+
+.cc_button {
+	display:inline-block;
+	padding:2px;
+	border:1px solid #3498DB;
+	background-color: #3498DB;
+	color: #FFFFFF !important;
+	border-radius: 3px;
+	margin: 0 5px 5px 0;
+}
+
+.cc_top-buffer { margin-top:20px; }
+
+.cc_info-centered { text-align: center; }

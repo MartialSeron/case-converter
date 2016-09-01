@@ -1,0 +1,63 @@
+{
+	
+	"case_converter_extension_name": {
+		"message": "Case Converter",
+		"description": "Le nom de cette extension"
+	},
+	"case_converter_extension_desc": {
+		"message": "Convertit facilement le texte selectionné en majuscules, minucules, ect.",
+		"description": "La description de cette extension"
+	},
+	"ccm_upper_case": {
+		"message": "Majuscules",
+		"description": "Option du menu contextuel pour la mise en majuscules"
+	},
+	"ccm_lower_case": {
+		"message": "Minuscules",
+		"description": "Option du menu contextuel pour la mise en minuscules"
+	},
+	"ccm_camel_case": {
+		"message": "camelCase",
+		"description": "Option du menu contextuel pour convertir en camelCase"
+	},
+	"ccm_pascal_case": {
+		"message": "PascalCase",
+		"description": "Option du menu contextuel pour convertir en PascalCase"
+	},
+	"ccm_capital_case": {
+		"message": "Capitales",
+		"description": "Option du menu contextuel pour convertir les premières lettres en capitales"
+	},
+	"ccm_email": {
+		"message": "E-mail",
+		"description": "Option du menu contextuel pour convertir au format e-mail"
+	},
+	"ccm_wo_accent": {
+		"message": "Sans accent",
+		"description": "Option du menu contextuel pour remplacer les caractères accentués pas leur équivalent sans accent"
+	},
+	"ccm_sentence_case": {
+		"message": "Phrase",
+		"description": "Option du menu contextuel pour mettre les majuscules selon les phrases"
+	},
+	"msg_not_editable_element": {
+		"message": "Texte non modifiable",
+		"description": "Message d'information sur conversion de texte non éditable"
+	},
+	"ccm_informations": {
+		"message": "Informations",
+		"description": "Option du menu contextuel pour affciher les informations sur la sélection"
+	},
+	"lbl_words": 		{ "message": "Mots"},
+	"lbl_characters": 	{ "message": "Caractères"},
+	"lbl_lines": 		{ "message": "Lignes"},
+
+	"options_saved": {
+		"message": "Options sauvegardées",
+		"description": "Message indiquant la sauvegarde des options"
+	},
+	"html_case_converter_options": 		{ "message": "Case Converter Options" },
+	"html_options": 		{ "message": "Options" },
+	"html_name": 		{ "message": "Nom" },
+	"html_command": 		{ "message": "Commande" }
+}
