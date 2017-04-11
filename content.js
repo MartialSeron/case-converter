@@ -1,182 +1,259 @@
+/* global removeDiacritics:false, $:false */
 
-
-String.prototype.removeAccents = function() {
-    return removeDiacritics(this);
-}
-
-String.prototype.toCapitalCase = function() {
-    return this.toLowerCase().replace(/(?:^|\s)\w/g, function(match) {
-        return match.toUpperCase();
-    });
-}
-
-String.prototype.toEmailCase = function() {
-    return this.removeAccents().toLowerCase().replace(/\s+/g,".");
-}
-
-String.prototype.toSentenceCase = function() {
-    return this.replace(/(^\w|[.!?]\s*\w)/g, function(txt) {
-        return txt.substr(0, txt.length - 1) + txt.charAt(txt.length - 1)
-            .toUpperCase();
-    });
-};
-
-String.prototype.toCamelCase = function(opt) { 
-    
-	var options = $.extend({firstLower: true}, opt);
-
-	var str = this.removeAccents();
+const StringUtils = {
+  removeAccents(str) {
+    return removeDiacritics(str);
+  },
+  toCapitalCase(str) {
+    return str.toLowerCase().replace(/(?:^|\s)\w/g, match => match.toUpperCase());
+  },
+  toEmailCase(str) {
+    return this.removeAccents(str).toLowerCase().replace(/\s+/g, '.');
+  },
+  toSentenceCase(str) {
+    return str.replace(/(^\w|[.!?]\s*\w)/g, txt => txt.substr(0, txt.length - 1) + txt.charAt(txt.length - 1).toUpperCase());
+  },
+  toCamelCase(str, { firstLower = true }) {
+    this.removeAccents(str)
     // Replace special characters with a space
-    str = str.replace(/[^a-zA-Z0-9 ]/g, " ");
+    .replace(/[^a-zA-Z0-9 ]/g, ' ')
     // put a space before an uppercase letter
-    str = str.replace(/([a-z](?=[A-Z]))/g, '$1 ');
-    // Lower case all characters 
-    str = str.replace(/([^a-zA-Z0-9 ])|^[0-9]+/g, '').trim().toLowerCase();
+    .replace(/([a-z](?=[A-Z]))/g, '$1 ')
+    // Lower case all characters
+    .replace(/([^a-zA-Z0-9 ])|^[0-9]+/g, '')
+    .trim()
+    .toLowerCase()
     // uppercase characters preceded by a space or number and delete spaces
-    str = str.replace(/([ 0-9]+)([a-zA-Z])/g, function(a,b,c) {
-        return b.trim() + c.toUpperCase();
-    });
+    .replace(/([ 0-9]+)([a-zA-Z])/g, (a, b, c) => b.trim() + c.toUpperCase());
 
-    if (options.firstLower == false)
-    	str = str.substr(0, 1).toUpperCase() + str.substr(1);
-
+    if (firstLower === false) {
+      return str.substr(0, 1).toUpperCase() + str.substr(1);
+    }
     return str;
+  },
+  countWords(str) {
+    if (!str.replace) return str;
+    str.replace(/(^\s*)|(\s*$)/gi, '')
+    .replace(/[ ]{2,}/gi, ' ')
+    .replace(/\n /, '\n');
+    return str.split(' ').length;
+  },
+  countLines(str) {
+    if (!str.replace) return str;
+    str.replace(/(^\s*)|(\s*$)/gi, '')
+    .replace(/[ ]{2,}/gi, ' ');
+    return str.split('\n').length;
+  },
+};
+
+class Replacement {
+  constructor() {
+    this.element = '';
+  }
+  setStrategy(element) {
+    this.element = element;
+  }
+  replaceSelectedText(replacementText) {
+    this.element.replaceSelectedText(replacementText);
+  }
+  getSelectedText() {
+    return this.element.getSelectedText();
+  }
 }
 
-var convertText = function(str, opt){
-	if ( typeof str == 'undefined' || typeof opt == 'undefined' )
-		return false;
+class ContentEditableElement {
+  constructor(element, context) {
+    this.context = context;
+    this.element = element;
+  }
 
-	switch(opt) {
-		case 'cc_upper':
-			str = str.toUpperCase();
-			break;
-		case 'cc_lower':
-			str = str.toLowerCase();
-			break;
-		case 'cc_camel':
-			str = str.toCamelCase({firstLower: true}); //$.camelCase(str);
-			break;
-		case 'cc_pascal':
-			str = str.toCamelCase({firstLower: false});
-			break;
-		case 'cc_capital':
-			str = str.toCapitalCase();
-			break;
-		case 'cc_email':
-			str = str.toEmailCase();
-			break;
-		case 'cc_wo_accent':
-			str = str.removeAccents();
-			break;
-		case 'cc_sentence':
-			str = str.toSentenceCase();
-			break;
-	}
+  /**
+   * To replace selected text in contentEditable element
+   * @param  string ReplacemetText The Replacement Value
+   */
+  replaceSelectedText(replacementText) {
+    let sel;
+    let range;
+    if (this.context.getSelection) {
+      sel = this.context.getSelection();
+      if (sel.rangeCount) {
+        range = sel.getRangeAt(0);
+        range.deleteContents();
+        range.insertNode(this.context.document.createTextNode(replacementText));
+      }
+    } else if (this.context.document.selection && this.context.document.selection.createRange) {
+      range = this.context.document.selection.createRange();
+      range.text = replacementText;
+    }
+  }
 
-	return str;
+  getSelectedText() {
+    return this.context.getSelection().toString();
+  }
+}
+
+class InputElement {
+  constructor(element, context) {
+    this.context = context;
+    this.element = element;
+  }
+
+  replaceSelectedText(replacementText) {
+    const sel = this.getSelectedRange();
+    const val = this.element.value;
+    this.element.value = val.slice(0, sel.start)
+                       + replacementText
+                       + val.slice(sel.end);
+    this.selectText(sel.start, sel.end);
+  }
+
+  selectText(startIndex, endIndex) {
+    this.element.focus();
+    this.element.selectionStart = startIndex;
+    this.element.selectionEnd = endIndex;
+  }
+
+  getSelectedText() {
+    return this.element.value.slice(this.element.selectionStart, this.element.selectionEnd);
+  }
+
+  getSelectedRange() {
+    let start = 0;
+    let end = 0;
+    let normalizedValue;
+    let range;
+    let textInputRange;
+    let len;
+    let endRange;
+
+    if (typeof this.element.selectionStart === 'number' && typeof this.element.selectionEnd === 'number') {
+      start = this.element.selectionStart;
+      end = this.element.selectionEnd;
+    } else {
+      range = this.context.document.selection.createRange();
+
+      if (range && range.parentElement() === this.element) {
+        len = this.element.value.length;
+        normalizedValue = this.element.value.replace(/\r\n/g, '\n');
+
+        // Create a working TextRange that lives only in the input
+        textInputRange = this.element.createTextRange();
+        textInputRange.moveToBookmark(range.getBookmark());
+
+        // Check if the start and end of the selection are at the very end
+        // of the input, since moveStart/moveEnd doesn't return what we want
+        // in those cases
+        endRange = this.element.createTextRange();
+        endRange.collapse(false);
+
+        if (textInputRange.compareEndPoints('StartToEnd', endRange) > -1) {
+          start = len;
+          end = len;
+        } else {
+          start = -textInputRange.moveStart('character', -len);
+          start += normalizedValue.slice(0, start).split('\n').length - 1;
+
+          if (textInputRange.compareEndPoints('EndToEnd', endRange) > -1) {
+            end = len;
+          } else {
+            end = -textInputRange.moveEnd('character', -len);
+            end += normalizedValue.slice(0, end).split('\n').length - 1;
+          }
+        }
+      }
+    }
+
+    return {
+      start,
+      end,
+    };
+  }
+}
+
+/**
+ * Return true if elmement can contains text selectable
+ * @param {HTMLElement} el Element to test
+ */
+const isSelectable = (el) => {
+  const elTagName = el ? el.tagName.toLowerCase() : null;
+  if ((elTagName === 'textarea' ||
+      (elTagName === 'input' && /^(?:text|search|password|tel|url)$/i.test(el.type)))
+      && (typeof el.selectionStart === 'number')) {
+    return true;
+  }
+  return false;
 };
 
 /**
- * To replace selected text in contentEditable DIV
- * @param  stringReplacemetTextTheReplacementValue
+ * Return true if elmement has option `isContentEditable`
+ * @param {HTMLElement} el Element to test
  */
-function replaceSelectedText(replacementText) {
-    var sel, range;
-    if (window.getSelection) {
-        sel = window.getSelection();
-        if (sel.rangeCount) {
-            range = sel.getRangeAt(0);
-            range.deleteContents();
-            range.insertNode(document.createTextNode(replacementText));
-        }
-    } else if (document.selection && document.selection.createRange) {
-        range = document.selection.createRange();
-        range.text = replacementText;
-    }
-}
-
-function countWords(str){
-	str = str.replace(/(^\s*)|(\s*$)/gi,"");
-	str = str.replace(/[ ]{2,}/gi," ");
-	str = str.replace(/\n /,"\n");
-	return str.split(' ').length;
-}
-
-function countLines(str){
-	console.log(str);
-	str = str.replace(/(^\s*)|(\s*$)/gi,"");
-	str = str.replace(/[ ]{2,}/gi," ");
-	//str = str.replace(/\n /,"\n");
-	return str.split('\n').length;
-}
+const isContentEditable = el => el && el.isContentEditable;
 
 /**
- * Recieves messages from context_menu
+ * Convert string according to option
+ * @param {string} str The string to convert
+ * @param {string} opt The option used to convert the string
  */
-chrome.extension.onMessage.addListener(function(request, sender, opt_callback) {
-  console.log('request : ', request);
-  switch (request.method) {
-    case 'show_informations':
-      var nbWords = countWords(request.selection);
-      var nbChars = request.selection.length;
-      //var nbLines = countLines(request.selection);
-
-      var msg = chrome.i18n.getMessage('lbl_words') + ' : ' + nbWords + '\n'
-          + chrome.i18n.getMessage('lbl_characters') + ' : ' + nbChars + '\n'
-          //+ chrome.i18n.getMessage('lbl_lines') + ' : ' + nbLines + '\n' //TODO: Find how to count HTML lines
-          ;
-
-      alert(msg);
-      break;
-    case 'convert_text':
-      if ( $(rClickElm)[0].type == 'text' || $(rClickElm)[0].type == 'textarea')
-        $(rClickElm).selection('replace', {text: convertText(request.selection, request.menu_item)});
-      else if( $(rClickElm)[0].isContentEditable == true ) 
-        replaceSelectedText( convertText(request.selection, request.menu_item) );
-      break;
+const convertText = (str, opt) => {
+  if (!str || !opt) {
+    return '';
   }
-    return true;
+
+  if (opt === 'cc_upper') return str.toUpperCase();
+  if (opt === 'cc_lower') return str.toLowerCase();
+  if (opt === 'cc_camel') return StringUtils.toCamelCase(str, { firstLower: true });
+  if (opt === 'cc_pascal') return StringUtils.toCamelCase(str, { firstLower: false });
+  if (opt === 'cc_capital') return StringUtils.toCapitalCase(str);
+  if (opt === 'cc_email') return StringUtils.toEmailCase(str);
+  if (opt === 'cc_wo_accent') return StringUtils.removeAccents(str);
+  if (opt === 'cc_sentence') return StringUtils.toSentenceCase(str);
+  return str;
+};
+
+/**
+ * Recieves messages from background or context_menu
+ */
+chrome.extension.onMessage.addListener((request) => {
+  if (request.method === 'show_informations') {
+    const nbWords = StringUtils.countWords(request.selection);
+    const nbChars = request.selection.length;
+    const msg = `${chrome.i18n.getMessage('lbl_words')} : ${nbWords}
+${chrome.i18n.getMessage('lbl_characters')} : ${nbChars}`;
+    alert(msg); // eslint-disable-line
+  }
+
+  if (request.method === 'convert_text') {
+    const activeEl = document.activeElement;
+    const repl = new Replacement();
+    let el;
+
+    if (isSelectable(activeEl)) {
+      el = new InputElement(activeEl, window);
+    } else if (isContentEditable(activeEl)) {
+      el = new ContentEditableElement(activeEl, window);
+    } else {
+      return false;
+    }
+
+    repl.setStrategy(el);
+    const selection = repl.getSelectedText();
+    const convtxt = convertText(selection, request.params.action);
+    repl.replaceSelectedText(convtxt);
+  }
+  return true;
 });
 
-
-
 /**
- * Tests if clicked element is editable
- * and send a message.
+ * Tests if clicked element is editable and send a message to activate context menu
  */
-var rClickElm = null;
-$(document).on("mousedown", function(e) {
-	 var rce = e.target;
-	 rClickElm = e.target;
-
-	 var isEditableElement = ( $(rce)[0].type == 'text' || $(rce)[0].type == 'textarea' || $(rce)[0].isContentEditable == true) 
-	 						? true : false;
-
-	if ( e.which == 3 ) {
-		chrome.runtime.sendMessage({
+document.addEventListener('mousedown', (e) => {
+  const isEditableElement = isSelectable(e.target) || isContentEditable(e.target);
+  if (parseInt(e.which, 10) === 3) {
+    chrome.runtime.sendMessage({
       from: 'content',
       method: 'set_cc_options_state',
-      params: {
-        isEditableElement: isEditableElement
-      }
+      params: { isEditableElement },
     });
-	}
-})
-.on('keydown', function(e){
-  console.log('Keydown triggered :', e);
-  chrome.runtime.sendMessage({
-    from: 'content',
-    method: 'convert_text',
-    params:{}
-  }); 
-
+  }
 });
-
-
-
-
-
-
-
-

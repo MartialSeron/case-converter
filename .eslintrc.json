@@ -1,0 +1,12 @@
+{
+    "parserOptions": {
+        "ecmaVersion": 6
+    },
+    "extends": ["eslint:recommended", "airbnb-base"],
+    "env": {
+        "browser": true
+    },
+    "globals": {
+        "chrome" :true
+    }
+}

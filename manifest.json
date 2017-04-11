@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "__MSG_case_converter_extension_name__",
     "short_name": "__MSG_case_converter_extension_name__",
-    "version": "1.1.0",
+    "version": "2.0",
     "description": "__MSG_case_converter_extension_desc__",
     "default_locale": "en",
     "icons": {
@@ -16,11 +16,47 @@
     },
     "background": {
         "scripts": [
-            "lib/jquery.min.js",
-            "lib/jquery.selection.js",
             "context_menu.js",
             "background.js"
         ]
+    },
+    "commands": {
+        "cc_upper": {
+            "description": "__MSG_ccm_upper_case__",
+            "suggested_key": {
+                "default": "Alt+Shift+U"
+            }
+        },
+        "cc_lower": {
+            "description": "__MSG_ccm_lower_case__",
+            "suggested_key": {
+                "default": "Alt+Shift+L"
+            }
+        },
+        "cc_sentence": {
+            "description": "__MSG_ccm_sentence_case__",
+            "suggested_key": {
+                "default": "Alt+Shift+S"
+            }
+        },
+        "cc_camel": {
+            "description": "__MSG_ccm_camel_case__",
+            "suggested_key": {
+                "default": "Alt+Shift+C"
+            }
+        },
+        "cc_pascal": {
+            "description": "__MSG_ccm_pascal_case__"
+        },
+        "cc_capital": {
+            "description": "__MSG_ccm_capital_case__"
+        },
+        "cc_wo_accent": {
+            "description": "__MSG_ccm_wo_accent__"
+        },
+        "cc_email": {
+            "description": "__MSG_ccm_email__"
+        }
     },
     "permissions": [
         "contextMenus",
@@ -33,18 +69,14 @@
     "content_scripts": [
         {
             "js": [
-                "lib/jquery.min.js",
-                "lib/jquery.selection.js",
                 "content.js",
                 "diacritics.js"
             ],
-            "css" : ["css/style.css"],
             "matches": [
                 "http://*/*",
                 "https://*/*"
             ],
             "run_at": "document_end"
         }
-    ],
-    "options_page": "options.html"
+    ]
 }
