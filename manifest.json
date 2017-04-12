@@ -1,82 +1,91 @@
 {
-    "manifest_version": 2,
-    "name": "__MSG_case_converter_extension_name__",
-    "short_name": "__MSG_case_converter_extension_name__",
-    "version": "2.0",
-    "description": "__MSG_case_converter_extension_desc__",
-    "default_locale": "en",
-    "icons": {
-        "16": "icons/icon16.png",
-        "24": "icons/icon24.png",
-        "32": "icons/icon32.png",
-        "48": "icons/icon48.png",
-        "72": "icons/icon72.png",
-        "96": "icons/icon96.png",
-        "128": "icons/icon128.png"
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlwWofFM6TGqag0Os3JqGKWLT0H54iMWZX6Ro4uc0AFmSBGBb15EboCUXJJy2Z10A4hURNSKRSij2PuSdDq4xd/Y3MiBcKBuGsfGmSBtxNb7gPex1QX7uPKUr+jJXalUz2jAw0xMAbz0eUtUJtb/kke8tDObJ8xjzyaA0BQKYzHaZqiJXT04DXaQir5/4+hSSlw4wNyi6DU8vFJEHI9xfXp4yksts86MjzY+iOZ/WG00+rNaowSipiZgWrXRd346fNI7CQZ66lZacTiSfRMpbdUoK1K3jWNMQJi3GNC3PyhKZHy3L2ac6mebBh7Gt7YNVD5pQthz+66RfNuXIxTlfWQIDAQAB",
+  "manifest_version": 2,
+  "name": "__MSG_case_converter_extension_name__",
+  "short_name": "__MSG_case_converter_extension_name__",
+  "version": "2.0.3",
+  "description": "__MSG_case_converter_extension_desc__",
+  "default_locale": "en",
+  "icons": {
+    "16": "icons/icon16.png",
+    "24": "icons/icon24.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "72": "icons/icon72.png",
+    "96": "icons/icon96.png",
+    "128": "icons/icon128.png"
+  },
+  "background": {
+    "scripts": [
+      "context_menu.js",
+      "background.js"
+    ]
+  },
+  "commands": {
+    "cc_upper": {
+      "description": "__MSG_ccm_upper_case__",
+      "suggested_key": {
+        "default": "Alt+Shift+U"
+      }
     },
-    "background": {
-        "scripts": [
-            "context_menu.js",
-            "background.js"
-        ]
+    "cc_lower": {
+      "description": "__MSG_ccm_lower_case__",
+      "suggested_key": {
+        "default": "Alt+Shift+L"
+      }
     },
-    "commands": {
-        "cc_upper": {
-            "description": "__MSG_ccm_upper_case__",
-            "suggested_key": {
-                "default": "Alt+Shift+U"
-            }
-        },
-        "cc_lower": {
-            "description": "__MSG_ccm_lower_case__",
-            "suggested_key": {
-                "default": "Alt+Shift+L"
-            }
-        },
-        "cc_sentence": {
-            "description": "__MSG_ccm_sentence_case__",
-            "suggested_key": {
-                "default": "Alt+Shift+S"
-            }
-        },
-        "cc_camel": {
-            "description": "__MSG_ccm_camel_case__",
-            "suggested_key": {
-                "default": "Alt+Shift+C"
-            }
-        },
-        "cc_pascal": {
-            "description": "__MSG_ccm_pascal_case__"
-        },
-        "cc_capital": {
-            "description": "__MSG_ccm_capital_case__"
-        },
-        "cc_wo_accent": {
-            "description": "__MSG_ccm_wo_accent__"
-        },
-        "cc_email": {
-            "description": "__MSG_ccm_email__"
-        }
+    "cc_sentence": {
+      "description": "__MSG_ccm_sentence_case__",
+      "suggested_key": {
+        "default": "Alt+Shift+S"
+      }
     },
-    "permissions": [
-        "contextMenus",
-        "identity",
-        "storage",
-        "tabs",
+    "cc_camel": {
+      "description": "__MSG_ccm_camel_case__",
+      "suggested_key": {
+        "default": "Alt+Shift+C"
+      }
+    },
+    "cc_pascal": {
+      "description": "__MSG_ccm_pascal_case__"
+    },
+    "cc_capital": {
+      "description": "__MSG_ccm_capital_case__"
+    },
+    "cc_wo_accent": {
+      "description": "__MSG_ccm_wo_accent__"
+    },
+    "cc_email": {
+      "description": "__MSG_ccm_email__"
+    }
+  },
+  "permissions": [
+    "contextMenus",
+    "identity",
+    "storage",
+    "tabs",
+    "http://*/*",
+    "https://*/*",
+    "https://www.googleapis.com/"
+  ],
+  "oauth2": {
+    "client_id": "492331340563-g5s89dfsvt0bv2iuldctkerg8qmr9vff.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/plus.login",
+      "https://www.googleapis.com/auth/chromewebstore.readonly"
+    ]
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "content.js",
+        "diacritics.js"
+      ],
+      "matches": [
         "http://*/*",
         "https://*/*"
-    ],
-    "content_scripts": [
-        {
-            "js": [
-                "content.js",
-                "diacritics.js"
-            ],
-            "matches": [
-                "http://*/*",
-                "https://*/*"
-            ],
-            "run_at": "document_end"
-        }
-    ]
+      ],
+      "run_at": "document_end"
+    }
+  ]
 }
