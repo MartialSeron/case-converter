@@ -55,5 +55,7 @@
 	"options_saved": {
 		"message": "Options saved",
 		"description": "Saving options message"
-	}
+	},
+  
+  "alert_feature_forbidden" : { "message" : "This feature is reserved for the paid version"}
 }

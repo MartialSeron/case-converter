@@ -3,7 +3,7 @@
   "manifest_version": 2,
   "name": "__MSG_case_converter_extension_name__",
   "short_name": "__MSG_case_converter_extension_name__",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "__MSG_case_converter_extension_desc__",
   "default_locale": "en",
   "icons": {
@@ -17,8 +17,8 @@
   },
   "background": {
     "scripts": [
-      "context_menu.js",
-      "background.js"
+      "scripts/context_menu.js",
+      "scripts/background.js"
     ]
   },
   "commands": {
@@ -35,15 +35,12 @@
       }
     },
     "cc_sentence": {
-      "description": "__MSG_ccm_sentence_case__",
-      "suggested_key": {
-        "default": "Alt+Shift+S"
-      }
+      "description": "__MSG_ccm_sentence_case__"
     },
     "cc_camel": {
       "description": "__MSG_ccm_camel_case__",
       "suggested_key": {
-        "default": "Alt+Shift+C"
+        "default": "Alt+Shift+K"
       }
     },
     "cc_pascal": {
@@ -53,10 +50,16 @@
       "description": "__MSG_ccm_capital_case__"
     },
     "cc_wo_accent": {
-      "description": "__MSG_ccm_wo_accent__"
+      "description": "__MSG_ccm_wo_accent__",
+      "suggested_key": {
+        "default": "Alt+Shift+A"
+      }
     },
     "cc_email": {
       "description": "__MSG_ccm_email__"
+    },
+    "cc_informations": {
+      "description": "__MSG_ccm_informations__"
     }
   },
   "permissions": [
@@ -78,8 +81,8 @@
   "content_scripts": [
     {
       "js": [
-        "content.js",
-        "diacritics.js"
+        "scripts/content.js",
+        "scripts/diacritics.js"
       ],
       "matches": [
         "http://*/*",

@@ -46,6 +46,8 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-node_modules/
-resources/misc
-package.json
+/node_modules
+/src/resources/misc
+/build
+/dist
+/cert

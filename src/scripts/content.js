@@ -2,6 +2,7 @@
 
 const StringUtils = {
   removeAccents(str) {
+    console.log('removeAccents str :', str);
     return removeDiacritics(str);
   },
   toCapitalCase(str) {
@@ -196,6 +197,9 @@ const isContentEditable = el => el && el.isContentEditable;
  * @param {string} opt The option used to convert the string
  */
 const convertText = (str, opt) => {
+  
+    console.log('str :', str);
+    console.log('opt :', opt);
   if (!str || !opt) {
     return '';
   }
@@ -215,11 +219,14 @@ const convertText = (str, opt) => {
  * Recieves messages from background or context_menu
  */
 chrome.extension.onMessage.addListener((request) => {
+
+  console.log('request.method :', request.method);
+
   if (request.method === 'show_informations') {
-    const nbWords = StringUtils.countWords(request.selection);
-    const nbChars = request.selection.length;
-    const msg = `${chrome.i18n.getMessage('lbl_words')} : ${nbWords}
-${chrome.i18n.getMessage('lbl_characters')} : ${nbChars}`;
+    console.log('request.params.selection :', request.params.selection);
+    const nbWords = StringUtils.countWords(request.params.selection);
+    const nbChars = request.params.selection.length;
+    const msg = `${chrome.i18n.getMessage('lbl_words')} : ${nbWords}\n${chrome.i18n.getMessage('lbl_characters')} : ${nbChars}`;
     alert(msg); // eslint-disable-line
   }
 
@@ -238,6 +245,7 @@ ${chrome.i18n.getMessage('lbl_characters')} : ${nbChars}`;
 
     repl.setStrategy(el);
     const selection = repl.getSelectedText();
+    console.log('selection :', selection);
     const convtxt = convertText(selection, request.params.action);
     repl.replaceSelectedText(convtxt);
   }

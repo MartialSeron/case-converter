@@ -51,13 +51,5 @@
 	"lbl_words": 		{ "message": "Mots"},
 	"lbl_characters": 	{ "message": "Caractères"},
 	"lbl_lines": 		{ "message": "Lignes"},
-
-	"options_saved": {
-		"message": "Options sauvegardées",
-		"description": "Message indiquant la sauvegarde des options"
-	},
-	"html_case_converter_options": 		{ "message": "Case Converter Options" },
-	"html_options": 		{ "message": "Options" },
-	"html_name": 		{ "message": "Nom" },
-	"html_command": 		{ "message": "Commande" }
+  "alert_feature_forbidden" : { "message" : "Cette fonctionnalité est réservée à la version payante"}
 }

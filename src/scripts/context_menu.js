@@ -101,7 +101,7 @@ const menu = {
     chrome.contextMenus.create({
       title: chrome.i18n.getMessage('ccm_informations'),
       contexts: ['selection'],
-      id: 'cc_infos',
+      id: 'cc_informations',
       parentId: 'caseconverter',
       onclick: menu.onClicked,
     });
@@ -116,7 +116,7 @@ const menu = {
    * @private
    */
   onClicked(info, tab) {
-    if (info.menuItemId === 'cc_infos') {
+    if (info.menuItemId === 'cc_informations') {
       chrome.tabs.sendMessage(tab.id, {
         from: 'context_menu',
         method: 'show_informations',

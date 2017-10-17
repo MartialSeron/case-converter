@@ -2,7 +2,7 @@
     "parserOptions": {
         "ecmaVersion": 6
     },
-    "extends": ["eslint:recommended", "airbnb-base"],
+    "extends": ["eslint:recommended"],
     "env": {
         "browser": true
     },
