@@ -14,6 +14,7 @@
     "gulp": "^3.9.1",
     "gulp-clean": "^0.3.2",
     "gulp-cleanhtml": "^1.0.3",
+    "gulp-sequence": "^0.4.6",
     "gulp-sourcemaps": "^2.6.1",
     "gulp-strip-debug": "^1.1.0",
     "gulp-uglify-es": "^0.1.3",
