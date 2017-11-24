@@ -65,7 +65,6 @@
   "permissions": [
     "contextMenus",
     "identity",
-    "identity.email",
     "storage",
     "tabs",
     "http://*/*",
