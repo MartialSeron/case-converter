@@ -32,6 +32,18 @@
 		"message": "E-mail",
 		"description": "Context menu option to convert into email format"
 	},
+	"ccm_slugify": {
+		"message": "Slugify",
+		"description": "Context menu option to convert into slug format"
+	},
+	"ccm_urlencode": {
+		"message": "URL encode",
+		"description": "Context menu option to encode URL"
+	},
+	"ccm_urldecode": {
+		"message": "URL decode",
+		"description": "Context menu option to decode URL"
+	},
 	"ccm_wo_accent": {
 		"message": "Remove accents",
 		"description": "Context menu option to replace accented characters by their unaccented equivalent"

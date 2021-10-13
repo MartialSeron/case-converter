@@ -1,8 +1,20 @@
 /* global removeDiacritics:false, $:false */
 
 const StringUtils = {
+  urlencode(str) {
+    return encodeURIComponent(str);
+  },
+  urldecode(str) {
+    return decodeURIComponent(str);
+  },
+  slugify(str) {
+    return this.removeAccents(str)
+      .replace(/[^a-zA-Z0-9 -]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-');
+  },
   removeAccents(str) {
-    console.log('removeAccents str :', str);
+    // console.log('removeAccents str :', str);
     return removeDiacritics(str);
   },
   toCapitalCase(str) {
@@ -210,6 +222,9 @@ const convertText = (str, opt) => {
   if (opt === 'cc_pascal') return StringUtils.toCamelCase(str, { firstLower: false });
   if (opt === 'cc_capital') return StringUtils.toCapitalCase(str);
   if (opt === 'cc_email') return StringUtils.toEmailCase(str);
+  if (opt === 'cc_slugify') return StringUtils.slugify(str);
+  if (opt === 'cc_urldecode') return StringUtils.urldecode(str);
+  if (opt === 'cc_urlencode') return StringUtils.urlencode(str);
   if (opt === 'cc_wo_accent') return StringUtils.removeAccents(str);
   if (opt === 'cc_sentence') return StringUtils.toSentenceCase(str);
   return str;

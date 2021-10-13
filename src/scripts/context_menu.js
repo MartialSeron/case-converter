@@ -83,6 +83,30 @@ const menu = {
     });
 
     chrome.contextMenus.create({
+      title: chrome.i18n.getMessage('ccm_slugify'),
+      contexts: ['selection'],
+      id: 'cc_slugify',
+      parentId: 'caseconverter',
+      onclick: menu.onClicked,
+    });
+
+    chrome.contextMenus.create({
+      title: chrome.i18n.getMessage('ccm_urlencode'),
+      contexts: ['selection'],
+      id: 'cc_urlencode',
+      parentId: 'caseconverter',
+      onclick: menu.onClicked,
+    });
+
+    chrome.contextMenus.create({
+      title: chrome.i18n.getMessage('ccm_urldecode'),
+      contexts: ['selection'],
+      id: 'cc_urldecode',
+      parentId: 'caseconverter',
+      onclick: menu.onClicked,
+    });
+
+    chrome.contextMenus.create({
       title: chrome.i18n.getMessage('ccm_wo_accent'),
       contexts: ['selection'],
       id: 'cc_wo_accent',
@@ -159,7 +183,10 @@ const menu = {
     chrome.contextMenus.update('cc_sentence', { enabled: s });
     chrome.contextMenus.update('cc_camel', { enabled: s });
     chrome.contextMenus.update('cc_pascal', { enabled: s });
+    chrome.contextMenus.update('cc_slugify', { enabled: s });
     chrome.contextMenus.update('cc_email', { enabled: s });
+    chrome.contextMenus.update('cc_urlencode', { enabled: s });
+    chrome.contextMenus.update('cc_urldecode', { enabled: s });
     chrome.contextMenus.update('cc_wo_accent', { enabled: s });
   },
 };

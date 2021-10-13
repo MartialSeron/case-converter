@@ -32,6 +32,18 @@
 		"message": "E-mail",
 		"description": "Option du menu contextuel pour convertir au format e-mail"
 	},
+	"ccm_slugify": {
+		"message": "Slugify",
+		"description": "Option du menu contextuel pour convertir au format slug"
+	},
+	"ccm_urlencode": {
+		"message": "Encoder URL",
+		"description": "Option du menu contextuel pour encoder un URL"
+	},
+	"ccm_urldecode": {
+		"message": "Décoder URL",
+		"description": "Option du menu contextuel pour decoder un URL"
+	},
 	"ccm_wo_accent": {
 		"message": "Sans accent",
 		"description": "Option du menu contextuel pour remplacer les caractères accentués pas leur équivalent sans accent"
