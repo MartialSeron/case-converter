@@ -64,20 +64,11 @@
   },
   "permissions": [
     "contextMenus",
-    "identity",
-    "storage",
     "tabs",
     "http://*/*",
     "https://*/*",
     "https://www.googleapis.com/"
   ],
-  "oauth2": {
-    "client_id": "492331340563-g5s89dfsvt0bv2iuldctkerg8qmr9vff.apps.googleusercontent.com",
-    "scopes": [
-      "https://www.googleapis.com/auth/plus.login",
-      "https://www.googleapis.com/auth/chromewebstore.readonly"
-    ]
-  },
   "content_scripts": [
     {
       "js": [

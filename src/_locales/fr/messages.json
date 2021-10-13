@@ -62,6 +62,5 @@
 	},
 	"lbl_words": 		{ "message": "Mots"},
 	"lbl_characters": 	{ "message": "Caractères"},
-	"lbl_lines": 		{ "message": "Lignes"},
-  "alert_feature_forbidden" : { "message" : "Cette fonctionnalité est réservée à la version payante"}
+	"lbl_lines": 		{ "message": "Lignes"}
 }
