@@ -1,5 +1,4 @@
 {
-	
 	"case_converter_extension_name": {
 		"message": "Case Converter",
 		"description": "Name of this extension"
@@ -22,7 +21,7 @@
 	},
 	"ccm_pascal_case": {
 		"message": "PascalCase",
-		"description":  "Context menu option for PascalCase"
+		"description": "Context menu option for PascalCase"
 	},
 	"ccm_capital_case": {
 		"message": "Capitalize",
@@ -60,12 +59,13 @@
 		"message": "Informations",
 		"description": "Context menu option to display information about selected text"
 	},
-	"lbl_words": 		{ "message": "Words" },
-	"lbl_characters": 	{ "message": "Characters" },
-	"lbl_lines": 		{ "message": "Lines"},
-
-	"options_saved": {
-		"message": "Options saved",
-		"description": "Saving options message"
+	"lbl_words": {
+		"message": "Words"
+	},
+	"lbl_characters": {
+		"message": "Characters"
+	},
+	"lbl_lines": {
+		"message": "Lines"
 	}
 }

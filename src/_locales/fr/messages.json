@@ -1,5 +1,4 @@
 {
-	
 	"case_converter_extension_name": {
 		"message": "Case Converter",
 		"description": "Le nom de cette extension"
@@ -60,7 +59,13 @@
 		"message": "Informations",
 		"description": "Option du menu contextuel pour affciher les informations sur la sélection"
 	},
-	"lbl_words": 		{ "message": "Mots"},
-	"lbl_characters": 	{ "message": "Caractères"},
-	"lbl_lines": 		{ "message": "Lignes"}
+	"lbl_words": {
+		"message": "Mots"
+	},
+	"lbl_characters": {
+		"message": "Caractères"
+	},
+	"lbl_lines": {
+		"message": "Lignes"
+	}
 }

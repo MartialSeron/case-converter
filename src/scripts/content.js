@@ -18,43 +18,46 @@ const StringUtils = {
     return removeDiacritics(str);
   },
   toCapitalCase(str) {
-    return str.toLowerCase().replace(/(?:^|\s)\w/g, match => match.toUpperCase());
+    return str.toLowerCase().replace(/(?:^|\s)\w/g, (match) => match.toUpperCase());
   },
   toEmailCase(str) {
     return this.removeAccents(str).toLowerCase().replace(/\s+/g, '.');
   },
   toSentenceCase(str) {
-    return str.replace(/(^\w|[.!?]\s*\w)/g, txt => txt.substr(0, txt.length - 1) + txt.charAt(txt.length - 1).toUpperCase());
+    return str.replace(
+      /(^\w|[.!?]\s*\w)/g,
+      (txt) => txt.substr(0, txt.length - 1) + txt.charAt(txt.length - 1).toUpperCase()
+    );
   },
   toCamelCase(str, { firstLower = true }) {
-    this.removeAccents(str)
-    // Replace special characters with a space
-    .replace(/[^a-zA-Z0-9 ]/g, ' ')
-    // put a space before an uppercase letter
-    .replace(/([a-z](?=[A-Z]))/g, '$1 ')
-    // Lower case all characters
-    .replace(/([^a-zA-Z0-9 ])|^[0-9]+/g, '')
-    .trim()
-    .toLowerCase()
-    // uppercase characters preceded by a space or number and delete spaces
-    .replace(/([ 0-9]+)([a-zA-Z])/g, (a, b, c) => b.trim() + c.toUpperCase());
+    const ret = this.removeAccents(str)
+      // Replace special characters with a space
+      .replace(/[^a-zA-Z0-9 ]/g, ' ')
+      // put a space before an uppercase letter
+      .replace(/([a-z](?=[A-Z]))/g, '$1 ')
+      .replace(/([^a-zA-Z0-9 ])|^[0-9]+/g, '')
+      .trim()
+      // Lower case all characters
+      .toLowerCase()
+      // uppercase characters preceded by a space or number and delete spaces
+      .replace(/([ 0-9]+)([a-zA-Z])/g, (a, b, c) => b.trim() + c.toUpperCase());
 
     if (firstLower === false) {
-      return str.substr(0, 1).toUpperCase() + str.substr(1);
+      return ret.substr(0, 1).toUpperCase() + ret.substr(1);
     }
-    return str;
+    return ret;
   },
   countWords(str) {
     if (!str.replace) return str;
-    str.replace(/(^\s*)|(\s*$)/gi, '')
-    .replace(/[ ]{2,}/gi, ' ')
-    .replace(/\n /, '\n');
+    str
+      .replace(/(^\s*)|(\s*$)/gi, '')
+      .replace(/[ ]{2,}/gi, ' ')
+      .replace(/\n /, '\n');
     return str.split(' ').length;
   },
   countLines(str) {
     if (!str.replace) return str;
-    str.replace(/(^\s*)|(\s*$)/gi, '')
-    .replace(/[ ]{2,}/gi, ' ');
+    str.replace(/(^\s*)|(\s*$)/gi, '').replace(/[ ]{2,}/gi, ' ');
     return str.split('\n').length;
   },
 };
@@ -114,9 +117,7 @@ class InputElement {
   replaceSelectedText(replacementText) {
     const sel = this.getSelectedRange();
     const val = this.element.value;
-    this.element.value = val.slice(0, sel.start)
-                       + replacementText
-                       + val.slice(sel.end);
+    this.element.value = val.slice(0, sel.start) + replacementText + val.slice(sel.end);
     this.selectText(sel.start, sel.end);
   }
 
@@ -189,9 +190,10 @@ class InputElement {
  */
 const isSelectable = (el) => {
   const elTagName = el ? el.tagName.toLowerCase() : null;
-  if ((elTagName === 'textarea' ||
-      (elTagName === 'input' && /^(?:text|search|password|tel|url)$/i.test(el.type)))
-      && (typeof el.selectionStart === 'number')) {
+  if (
+    (elTagName === 'textarea' || (elTagName === 'input' && /^(?:text|search|password|tel|url)$/i.test(el.type))) &&
+    typeof el.selectionStart === 'number'
+  ) {
     return true;
   }
   return false;
@@ -201,7 +203,7 @@ const isSelectable = (el) => {
  * Return true if elmement has option `isContentEditable`
  * @param {HTMLElement} el Element to test
  */
-const isContentEditable = el => el && el.isContentEditable;
+const isContentEditable = (el) => el && el.isContentEditable;
 
 /**
  * Convert string according to option
@@ -209,9 +211,8 @@ const isContentEditable = el => el && el.isContentEditable;
  * @param {string} opt The option used to convert the string
  */
 const convertText = (str, opt) => {
-  
-    console.log('str :', str);
-    console.log('opt :', opt);
+  // console.log('str :', str);
+  // console.log('opt :', opt);
   if (!str || !opt) {
     return '';
   }
@@ -234,15 +235,16 @@ const convertText = (str, opt) => {
  * Recieves messages from background or context_menu
  */
 chrome.extension.onMessage.addListener((request) => {
-
-  console.log('request.method :', request.method);
+  // console.log('request.method :', request.method);
 
   if (request.method === 'show_informations') {
-    console.log('request.params.selection :', request.params.selection);
+    // console.log('request.params.selection :', request.params.selection);
     const nbWords = StringUtils.countWords(request.params.selection);
     const nbChars = request.params.selection.length;
-    const msg = `${chrome.i18n.getMessage('lbl_words')} : ${nbWords}\n${chrome.i18n.getMessage('lbl_characters')} : ${nbChars}`;
-    alert(msg); // eslint-disable-line
+    const msg = `${chrome.i18n.getMessage('lbl_words')} : ${nbWords}\n${chrome.i18n.getMessage(
+      'lbl_characters'
+    )} : ${nbChars}`;
+    alert(msg);
   }
 
   if (request.method === 'convert_text') {
@@ -260,7 +262,7 @@ chrome.extension.onMessage.addListener((request) => {
 
     repl.setStrategy(el);
     const selection = repl.getSelectedText();
-    console.log('selection :', selection);
+    // console.log('selection :', selection);
     const convtxt = convertText(selection, request.params.action);
     repl.replaceSelectedText(convtxt);
   }
@@ -272,7 +274,7 @@ chrome.extension.onMessage.addListener((request) => {
  */
 document.addEventListener('mousedown', (e) => {
   const isEditableElement = isSelectable(e.target) || isContentEditable(e.target);
-  if (parseInt(e.which, 10) === 3) {
+  if (e.button === 2) {
     chrome.runtime.sendMessage({
       from: 'content',
       method: 'set_cc_options_state',
@@ -280,5 +282,3 @@ document.addEventListener('mousedown', (e) => {
     });
   }
 });
-
-

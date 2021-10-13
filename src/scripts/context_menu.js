@@ -1,10 +1,7 @@
-
-
 /**
  * Namespace for context menu functionality.
  */
 const menu = {
-
   /**
    * Adds a context menu to every page that lets the user select text and add
    * an event to calendar.
@@ -65,7 +62,6 @@ const menu = {
       onclick: menu.onClicked,
     });
 
-
     /* Not case converter options */
     chrome.contextMenus.create({
       type: 'separator',
@@ -114,7 +110,7 @@ const menu = {
       onclick: menu.onClicked,
     });
 
-  /* Informations */
+    /* Informations */
     chrome.contextMenus.create({
       type: 'separator',
       contexts: ['selection'],
@@ -130,7 +126,6 @@ const menu = {
       onclick: menu.onClicked,
     });
   },
-
 
   /**
    * The click handler that gets called when a user selects text, then clicks
@@ -158,7 +153,7 @@ const menu = {
         },
       });
     } else {
-      alert(chrome.i18n.getMessage('msg_not_editable_element')); // eslint-disable-line
+      alert(chrome.i18n.getMessage('msg_not_editable_element'));
     }
   },
 
@@ -170,13 +165,12 @@ const menu = {
     menu.setCCOptionsState();
   },
 
-
   /**
    * Disables the menu's entries if state is false
    * @param {Boolean} state Disable entries if false
    */
   setCCOptionsState(state) {
-    const s = (typeof state === 'undefined') ? true : state;
+    const s = typeof state === 'undefined' ? true : state;
     chrome.contextMenus.update('cc_upper', { enabled: s });
     chrome.contextMenus.update('cc_lower', { enabled: s });
     chrome.contextMenus.update('cc_capital', { enabled: s });
@@ -193,4 +187,3 @@ const menu = {
 
 /* Initialise context menu */
 menu.initialize();
-
